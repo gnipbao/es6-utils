@@ -1,0 +1,27 @@
+{
+  "name": "es6-utils",
+  "version": "0.0.0",
+  "description": "utils with pure es6",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gnipbao/es6-utils.git"
+  },
+  "keywords": [
+    "utils",
+    "helpers",
+    "kits"
+  ],
+  "author": "gnip",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gnipbao/es6-utils/issues"
+  },
+  "homepage": "https://github.com/gnipbao/es6-utils#readme"
+}
