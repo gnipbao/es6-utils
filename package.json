@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "dev": "webpack-dev-server --config webpack.config.js --watch --colors",
     "prettier-watch": "npx onchange 'src/*.js' -- prettier --write {{changed}}"
   },
   "repository": {
@@ -14,7 +15,10 @@
     "url": "git+https://github.com/gnipbao/es6-utils.git"
   },
   "lint-staged": {
-    "*.{js,json,css,md}": ["prettier --write", "git add"]
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "keywords": [
     "utils",
@@ -28,8 +32,17 @@
   },
   "homepage": "https://github.com/gnipbao/es6-utils#readme",
   "devDependencies": {
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
+    "babel-loader": "^8.0.0-beta.0",
+    "clean-webpack-plugin": "^0.1.18",
+    "css-loader": "^0.28.10",
     "husky": "^0.14.3",
     "lint-staged": "^7.0.0",
-    "prettier": "1.11.1"
+    "prettier": "1.11.1",
+    "webpack": "^4.1.0",
+    "webpack-cli": "^2.0.10",
+    "webpack-dev-server": "^3.1.0"
   }
 }

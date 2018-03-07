@@ -193,7 +193,6 @@ let _once = (node, type, handler, capture) => {
  */
 class Dom {
   constructor(selector) {
-    this.elem = this[0];
     return this._query.call(this, selector);
   }
 
@@ -220,6 +219,16 @@ class Dom {
     }
 
     ctx = ctx || this;
+    for (i = 0; i < nodeList.length; i++) {
+      ctx[i] = nodeList[i];
+    }
+    ctx.__$__ = true;
+    ctx.length = nodeList.length;
+    return ctx;
+  }
+  
+  nodeList(nodeList){
+    let ctx = this, i;
     for (i = 0; i < nodeList.length; i++) {
       ctx[i] = nodeList[i];
     }
@@ -259,7 +268,7 @@ class Dom {
   }
 
   hasClass(className) {
-    return hasClass(this.elem, className);
+    return hasClass(this[0], className);
   }
 
   css(attrName, value) {
@@ -277,8 +286,9 @@ class Dom {
       });
     }
     if (this.length > 0) {
-      value = _getComputedStyle(this.elem)[camelizeName];
+      value = _getComputedStyle(this[0])[camelizeName];
     }
+    return value
   }
   // display element
   show() {
@@ -297,7 +307,7 @@ class Dom {
     }
 
     if (this.length > 0) {
-      value = this.elem.getAttribute(attrName);
+      value = this[0].getAttribute(attrName);
     }
 
     return value;
@@ -311,21 +321,21 @@ class Dom {
 
   /* ---------------traverse ---------------------*/
   children() {
-    let target = this.elem;
-    return siblings(target.firstChild);
+    let target = this[0];
+    return this.nodeList(siblings(target.firstChild));
   }
 
-  siblings(elem) {
+  siblings() {
     let target = this[0];
-    return siblings((target.parentNode || {}).firstChild, elem);
+    return this.nodeList(siblings((target.parentNode || {}).firstChild, target));
   }
 
   next() {
-    return sibling(this.elem, "nextSibling");
+    return this.nodeList(sibling(this[0], "nextSibling"));
   }
 
   prev() {
-    return sibling(this.elem, "previousSibling");
+    return this.nodeList(sibling(this[0], "previousSibling"));
   }
 
   /*--------------- manipulations -------------------- */
@@ -334,13 +344,13 @@ class Dom {
       this._each((index, elem) => {
         elem.innerHTML = val;
       });
-    } else if (this.elem) {
-      return this.elem.innerHTML;
+    } else if (this[0]) {
+      return this[0].innerHTML;
     }
   }
 
   append(elem) {
-    if (!this.elem) return this;
+    if (!this[0]) return this;
     let fragment, tempElem;
     if (typeof elem === "string") {
       fragment = doc.createDocumentFragment();
@@ -349,11 +359,11 @@ class Dom {
       elem = tempElem.firstChild;
     }
     if (
-      this.elem.nodeType === 1 ||
-      this.elem.nodeType === 11 ||
-      this.elem.nodeType === 9
+      this[0].nodeType === 1 ||
+      this[0].nodeType === 11 ||
+      this[0].nodeType === 9
     ) {
-      this.elem.appendChild(elem);
+      this[0].appendChild(elem);
     }
     tempElem = null;
 
@@ -367,7 +377,7 @@ class Dom {
   }
 
   contains(node) {
-    let context = this.elem;
+    let context = this[0];
     return canUseDom
       ? node => {
           if (context.contains) {
@@ -384,8 +394,8 @@ class Dom {
   }
 
   offset() {
-    let doc = (this.elem && this.elem.ownerDocument) || document;
-    let docElem = doc && doc.document;
+    let doc = (this[0] && this[0].ownerDocument) || document;
+    let docElem = doc && doc.documentElement;
     let box = {
       top: 0,
       left: 0,
@@ -395,8 +405,8 @@ class Dom {
 
     if (!doc) return;
 
-    if (this.elem.getBoundingClientRect !== undefined)
-      box = this.elem.getBoundingClientRect();
+    if (this[0].getBoundingClientRect !== undefined)
+      box = this[0].getBoundingClientRect();
 
     // IE8 getBoundingClientRect doesn't support width & height
     box = {
@@ -408,15 +418,15 @@ class Dom {
         box.left +
         (win.pageXOffset || docElem.scrollLeft) -
         (docElem.clientLeft || 0),
-      width: (box.width == null ? this.elem.offsetWidth : box.width) || 0,
-      height: (box.height == null ? this.elem.offsetHeight : box.height) || 0
+      width: (box.width == null ? this[0].offsetWidth : box.width) || 0,
+      height: (box.height == null ? this[0].offsetHeight : box.height) || 0
     };
 
     return box;
   }
   // width height both from computed style first then from offset
   width(value) {
-    if (!this.elem) return 0;
+    if (!this[0]) return 0;
     if (value) {
       return this.css("width", toPxVal(value));
     } else {
@@ -432,7 +442,7 @@ class Dom {
   }
 
   height(value) {
-    if (this.elem) return 0;
+    if (this[0]) return 0;
     if (value) {
       return this.css("height", toPxVal(value));
     } else {
@@ -485,6 +495,7 @@ class Dom {
     });
   }
 }
+
 
 export default function(selector) {
   return new Dom(selector);
