@@ -7,11 +7,14 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prettier-watch": "onchange 'src/*.js' -- prettier --write {{changed}}"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gnipbao/es6-utils.git"
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": ["prettier --write", "git add"]
   },
   "keywords": [
     "utils",
@@ -23,5 +26,10 @@
   "bugs": {
     "url": "https://github.com/gnipbao/es6-utils/issues"
   },
-  "homepage": "https://github.com/gnipbao/es6-utils#readme"
+  "homepage": "https://github.com/gnipbao/es6-utils#readme",
+  "devDependencies": {
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.0",
+    "prettier": "1.11.1"
+  }
 }
