@@ -3,7 +3,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const basePath = path.resolve(__dirname, './');
 const publicPath = basePath + '/demo';
 module.exports = {
-  entry: "./test/dom", // string | object | array
+  entry: "./test/md5", // string | object | array
   // webpack 
   output: {
     path: path.resolve(__dirname, "dist"), // string

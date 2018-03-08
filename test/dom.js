@@ -10,3 +10,6 @@ $('.first').listen('click',function(){
   $(this).toggleClass('blue');
   // console.log($(this));
 });
+$('ul').children().on('click', function(){
+  $(this).addClass('blue');
+})
