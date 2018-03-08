@@ -7,8 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "dev": "webpack-dev-server --config webpack.config.js --watch --colors",
-    "prettier-watch": "npx onchange 'src/*.js' -- prettier --write {{changed}}"
+    "prettier-watch": "npx onchange 'src/*.js' -- prettier --write {{changed}}", 
+    "dev": "webpack-dev-server --config webpack.config.js --watch --colors"
+    
   },
   "repository": {
     "type": "git",

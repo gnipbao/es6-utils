@@ -39,7 +39,7 @@ module.exports = {
   target: "web", 
 
   devServer: {
-    compress: false,
+    compress: true, // gzip
     contentBase: path.resolve(__dirname, './', 'demo'),
     clientLogLevel: 'none',
     quiet: false,
