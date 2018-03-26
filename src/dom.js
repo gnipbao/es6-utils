@@ -226,9 +226,10 @@ class Dom {
     ctx.length = nodeList.length;
     return ctx;
   }
-  
-  nodeList(nodeList){
-    let ctx = this, i;
+
+  _nodeList(nodeList) {
+    let ctx = this,
+      i;
     for (i = 0; i < nodeList.length; i++) {
       ctx[i] = nodeList[i];
     }
@@ -288,7 +289,7 @@ class Dom {
     if (this.length > 0) {
       value = _getComputedStyle(this[0])[camelizeName];
     }
-    return value
+    return value;
   }
   // display element
   show() {
@@ -322,20 +323,22 @@ class Dom {
   /* ---------------traverse ---------------------*/
   children() {
     let target = this[0];
-    return this.nodeList(siblings(target.firstChild));
+    return this._nodeList(siblings(target.firstChild));
   }
 
   siblings() {
     let target = this[0];
-    return this.nodeList(siblings((target.parentNode || {}).firstChild, target));
+    return this._nodeList(
+      siblings((target.parentNode || {}).firstChild, target)
+    );
   }
 
   next() {
-    return this.nodeList(sibling(this[0], "nextSibling"));
+    return this._nodeList(sibling(this[0], "nextSibling"));
   }
 
   prev() {
-    return this.nodeList(sibling(this[0], "previousSibling"));
+    return this._nodeList(sibling(this[0], "previousSibling"));
   }
 
   /*--------------- manipulations -------------------- */
@@ -495,7 +498,6 @@ class Dom {
     });
   }
 }
-
 
 export default function(selector) {
   return new Dom(selector);

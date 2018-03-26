@@ -1,2 +1,30 @@
 import md5 from '../src/md5';
 console.log(md5('message'));
+import cookies from '../src/cookies';
+import ls from 'bstore';
+import Log from '../src/logger';
+let log = new Log('foo');
+log.time('st');
+console.log(cookies.set('xx','xx',{expires: 7 }));
+console.log(cookies.set('00','00', {domain:'com'}));
+console.log(cookies.set('oo', 'oo', {expires: 10000}));
+console.log(cookies.get('xx'));
+cookies.remove('oo');
+ls.set('test1','v1');
+ls.set('test2','v2');
+ls.set('test3',{name:'张三',sex:'男'});
+ls.set('xx','xxxxxxxxx');
+console.log(ls.get('xx'));
+ls.forEach((k,v)=>{
+  console.log(k,v);
+})
+console.log(ls.getAll());
+console.log(ls.key(1));
+log.info('xsdsfsfsaf',md5('message'));
+log.error('this is error');
+log.warn('this is warning!!!');
+log.timeEnd('st');
+log.info(JSON.stringify(log.getLevel()));
+Log.persistent(false);
+log.info('getmessages',Log.getLog());
+log.info('wepack-devserver');

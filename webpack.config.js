@@ -1,7 +1,7 @@
 const path = require('path');
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const basePath = path.resolve(__dirname, './');
-const publicPath = basePath + '/demo';
 module.exports = {
   entry: "./test/md5", // string | object | array
   // webpack 
@@ -9,7 +9,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"), // string
     filename: "bundle.js", // string
     chunkFilename: "[hash].[id].js",
-    publicPath: publicPath,
+    publicPath: "/dist/",
     library: "DOM", // string,
     libraryTarget: "umd"
   },
@@ -39,8 +39,8 @@ module.exports = {
   target: "web", 
 
   devServer: {
-    compress: true, // gzip
-    contentBase: path.resolve(__dirname, './', 'demo'),
+    compress: false, // gzip
+    contentBase: path.resolve(__dirname,"./", "demo"),
     clientLogLevel: 'none',
     quiet: false,
     open: true,
@@ -55,7 +55,8 @@ module.exports = {
   plugins: [
     // ...
     new CleanWebpackPlugin(['dist']),
-
+    
+    new webpack.HotModuleReplacementPlugin()
   ]
 
   // TODO
